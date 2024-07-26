@@ -34,6 +34,10 @@ jobs:
           UPDATE_EXPRESSION=$(jq -r 'to_entries | map("\(.key) = :\(.key)") | join(", ")' <<< "$UPDATE_JSON")
           EXPRESSION_ATTRIBUTE_VALUES=$(jq -c 'to_entries | map("\(.key): {\"S\": \(.value.S)}") | add' <<< "$UPDATE_JSON")
 
+          # Debug outputs
+          echo "Update Expression: $UPDATE_EXPRESSION"
+          echo "Expression Attribute Values: $EXPRESSION_ATTRIBUTE_VALUES"
+
           # Run the update command
           aws dynamodb update-item \
             --table-name $TABLE_NAME \
