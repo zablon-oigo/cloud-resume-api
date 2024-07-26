@@ -30,15 +30,19 @@ jobs:
 
     - name: Initialize Terraform
       run: terraform init
+      working-directory: infra/*
 
     - name: Validate Terraform configuration
       run: terraform validate
+      working-directory: infra
 
     - name: Plan Terraform deployment
-      # run: terraform plan -out=tfplan -input=false
+      run: terraform plan -out=tfplan -input=false
+      working-directory: infra
       
     - name: Apply Terraform deployment
       run: terraform apply -auto-approve 
+      working-directory: infra
 
     - name: Put DynamoDB Item
       uses: mooyoul/dynamodb-actions@v1.2.1
