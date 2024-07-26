@@ -43,7 +43,7 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
 
 # Create a policy to provide DynamoDB full access
 resource "aws_iam_policy" "dynamodb_full_access" {
-  name        = "DynamoDBFullAccessPolicy" 
+  name        = "DynamoAccessPolicy" 
   description = "Policy to allow full access to DynamoDB"  
 
   policy      = jsonencode({
