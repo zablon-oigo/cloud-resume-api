@@ -1,0 +1,65 @@
+name: Cloud Resume API Challenge
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      DYNAMODB_TABLE_NAME: ${{TABLE_NAME}}
+      DYNAMODB_PRIMARY_KEY: ${{PRIMARY_KEY}}
+      DYNAMODB_PRIMARY_KEY_VALUE: ${{PRIMARY_KEY_VALUE}}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Update DynamoDB Item
+      run: |
+          # Use environment variables for DynamoDB table details
+          TABLE_NAME="${{ env.DYNAMODB_TABLE_NAME }}"
+          PRIMARY_KEY="${{ env.DYNAMODB_PRIMARY_KEY }}"
+          PRIMARY_KEY_VALUE="${{ env.DYNAMODB_PRIMARY_KEY_VALUE }}"
+          
+          # Extract updates from JSON file
+          UPDATE_JSON=$(jq -c . files/resume.json)
+
+          # Construct update expression and attribute values
+          UPDATE_EXPRESSION=$(jq -r 'to_entries | map("\(.key) = :\(.key)") | join(", ")' <<< "$UPDATE_JSON")
+          EXPRESSION_ATTRIBUTE_VALUES=$(jq -c 'to_entries | map("\(.key): {\"S\": \(.value.S)}") | add' <<< "$UPDATE_JSON")
+
+          # Run the update command
+          aws dynamodb update-item \
+            --table-name $TABLE_NAME \
+            --key "{\"$PRIMARY_KEY\": {\"S\": \"$PRIMARY_KEY_VALUE\"}}" \
+            --update-expression "SET $UPDATE_EXPRESSION" \
+            --expression-attribute-values "$EXPRESSION_ATTRIBUTE_VALUES" \
+            --region $AWS_REGION
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.9.0
+    - name: Configure AWS credentials
+      run: |
+        echo "access_key = \"${AWS_ACCESS_KEY_ID}\"" >> terraform.tfvars
+        echo "secret_key = \"${AWS_SECRET_ACCESS_KEY}\"" >> terraform.tfvars
+        echo "region = \"${AWS_REGION}\"" >> terraform.tfvars
+
+    - name: Initialize Terraform
+      run: terraform init
+
+    - name: Validate Terraform configuration
+      run: terraform validate
+
+    - name: Plan Terraform deployment
+      run: terraform plan -out=tfplan -input=false
+      
+    - name: Apply Terraform deployment
+      run: terraform apply -auto-approve tfplan -input=false

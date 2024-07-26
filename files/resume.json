@@ -1,0 +1,255 @@
+{
+  "id": {"S": "1"},
+  "viewsCount":{"S":"1"},
+  "basics": {
+      "M": {
+          "name": {"S": "Zablon Oigo"},
+          "label": {"S": "Software Developer"},
+          "image": {"S": ""},
+          "email": {"S": "zablon@gmail.com"},
+          "phone": {"S": "(912) 555-4321"},
+          "url": {"S": "https://zablonoigo.com"},
+         "summary": {
+         "S": "Seasoned software developer with deep expertise in Django and REST frameworks, skilled in designing and building scalable web applications that excel under high traffic conditions. As a certified AWS Solutions Architect, I excel in crafting and deploying efficient cloud solutions that drive operational success and align with strategic objectives. My proficiency in DevOps practices enhances integration and deployment processes, ensuring robust, high-availability systems. I am dedicated to applying my comprehensive technical skills to deliver innovative software solutions that improve user experience and foster business growth."},
+          "location": {
+              "M": {
+                  "address": {"S": "2712 Broadway St"},
+                  "postalCode": {"S": "CA 94115"},
+                  "city": {"S": "San Francisco"},
+                  "countryCode": {"S": "US"},
+                  "region": {"S": "California"}
+              }
+          },
+          "profiles": {
+              "L": [
+                  {
+                      "M": {
+                          "network": {"S": "Linkedin"},
+                          "username": {"S": "zablon oigo"},
+                          "url": {"S": "https://twitter.com/john"}
+                      }
+                  }
+              ]
+          }
+      }
+  },
+  "work": {
+    "L": [
+      {
+        "M": {
+        "name": {"S": "CloudMyTribe Consultancy Company"},
+        "position": {"S": "Cloud Infrastructure Engineer"},
+        "url": {"S": "https://company.com"},
+        "startDate": {"S": "2024-05-11"},
+        "endDate": {"S": "2024-11-11"},
+        "highlights": {
+            "L": [
+            {"S": "Engineered scalable AWS infrastructure solutions, achieving a 40% improvement in performance and a 25% reduction in operational costs."},
+            {"S": "Automated deployment workflows using CI/CD pipelines, decreasing deployment time by 60% and increasing release frequency."},
+            {"S": "Worked closely with cross-functional teams to design and deploy cloud architectures tailored to diverse client needs, enhancing overall project success."},
+            {"S": "Directed the migration of legacy systems to AWS, ensuring a seamless transition with less than 2 hours of downtime and minimal disruption to business operations."}
+            ]
+        }
+        }
+      },
+      {
+        "M": {
+        "name": {"S": "Equity Bank"},
+        "position": {"S": "Software Developer"},
+        "url": {"S": "https://company2.com"},
+        "startDate": {"S": "2024-04-12"},
+        "endDate": {"S": "2023-01-11 "},
+        "highlights": {
+            "L": [
+            {"S": "Developed and maintained high-performance Django applications, accommodating a 50% increase in user traffic with zero downtime."},
+            {"S": "Architected and implemented RESTful APIs, streamlining data exchange processes and reducing latency by 25%."},
+            {"S": "Partnered with QA teams to integrate automated testing frameworks, cutting manual testing time by 40% and accelerating release cycles."},
+            {"S": "Proactively identified and resolved critical bugs and performance bottlenecks, enhancing application stability and achieving 99.9% uptime."}
+            ]
+        }
+        }
+
+      },
+      {
+        "M": {
+            "name": {"S": "Liquid Technologies"},
+            "position": {"S": "Technical Support"},
+            "url": {"S": "https://company2.com"},
+            "startDate": {"S": "2016-02-11"},
+            "endDate": {"S": "2022-11-11"},
+            "highlights": {
+                "L": [
+                {"S": "Delivered exceptional technical support, resolving over 95% of hardware and software issues within the first interaction."},
+                {"S": "Spearheaded system upgrades and configurations, boosting system performance by 30% and significantly reducing downtime."},
+                {"S": "Conducted comprehensive training for 100+ users on new software applications, leading to a 40% increase in user adoption and satisfaction."},
+                {"S": "Partnered with engineering teams to gather and relay user feedback, contributing to the enhancement of product features and overall user experience."}
+                ]
+            }
+        }
+      }
+    ]
+  },
+  "education": {
+      "L": [
+          {
+              "M": {
+            "institution": {"S": "Dedan Kimathi University of Technology"},
+            "url": {"S": "https://institution.com/"},
+            "area": {"S": "Software Development"},
+            "studyType": {"S": "Bachelor"},
+            "startDate": {"S": "2019-01-11"},
+            "endDate": {"S": "2024-11-11"},
+            "score": {"S": "4.0"},
+            "courses": {
+                "L": [
+                {"S": "DB1101 - Basic SQL"},
+                {"S": "CS2102 - Data Structures and Algorithms"},
+                {"S": "CS2201 - Object-Oriented Programming"},
+                {"S": "CS3101 - Web Development"},
+                {"S": "CS3301 - Database Management Systems"},
+                {"S": "CS3401 - Software Engineering"}
+                ]
+            }
+            }
+          }
+      ]
+  },
+  "awards": {
+      "L": [
+          {
+              "M": {
+                    "title": {"S": "Best Project Award"},
+                    "date": {"S": "2019-09-30"},
+                    "awarder": {"S": "University Tech Fair"},
+                    "summary": {"S": "Awarded for the best project presentation and execution in a competitive tech fair at the university."}
+              }
+          }
+      ]
+  },
+  "certificates": {
+      "L": [
+          {
+              "M": {
+                "name": {"S": "AWS Solutions Architect"},
+                "date": {"S": "2024-11-11"},
+                "issuer": {"S": "Amazon Web Services"},
+                "url": {"S": "https://certificate.com/aws-solutions-architect"}
+              }
+          },
+          {
+              "M": {
+                "name": {"S": "AWS Cloud Practitioner"},
+                "date": {"S": "2021-11-07"},
+                "issuer": {"S": "Amazon Web Services"},
+                "url": {"S": "https://certificate.com/aws-cloud-practitioner"}
+              }
+          }
+      ]
+  },
+  "skills": {
+      "L": [
+          {
+              "M": {
+                  "name": {"S": "Web Development"},
+                  "level": {"S": "Master"},
+                  "keywords": {
+                      "L": [
+                          {"S": "HTML"},
+                          {"S": "TailwindCSS"},
+                          {"S": "JavaScript"},
+                          {"S": "Python"},
+                          {"S": "Linux"},
+                          {"S": "Docker"}
+                      ]
+                  }
+              }
+          }
+      ]
+  },
+  "languages": {
+      "L": [
+          {
+              "M": {
+                  "language": {"S": "English"},
+                  "fluency": {"S": "Native speaker"}
+              }
+          }
+      ]
+  },
+  "interests": {
+      "L": [
+          {
+              "M": {
+                  "name": {"S": "Wildlife"},
+                  "keywords": {
+                      "L": [
+                          {"S": "Ferrets"},
+                          {"S": "Unicorns"}
+                      ]
+                  }
+              }
+          }
+      ]
+  },
+  "references": {
+      "L": [
+          {
+              "M": {
+                  "name": {"S": "Jane Doe"},
+                  "reference": {"S": "Technical Support Specialist"}
+              }
+          },
+          {
+              "M": {
+                  "name": {"S": "John Doe"},
+                  "reference": {"S": "DevOps Engineer"}
+              }
+          },
+          {
+              "M": {
+                  "name": {"S": "Bob Andrew"},
+                  "reference": {"S": "Software Engineer"}
+              }
+          }
+      ]
+  },
+  "projects": {
+      "L": [
+          {
+              "M": {
+                "name": {"S": "Cloud Resume API Challenge"},
+                "startDate": {"S": "2019-01-01"},
+                "endDate": {"S": "2021-01-01"},
+                "description": {"S": "Developed and implemented a serverless API for a comprehensive cloud resume challenge. The project showcased advanced skills in cloud infrastructure and DevOps practices."},
+                "highlights": {
+                "L": [
+                    {"S": "Engineered a scalable serverless API using AWS Lambda, DynamoDB, and API Gateway, significantly reducing infrastructure overhead and cost."},
+                    {"S": "Automated deployment pipelines with GitHub Actions, achieving continuous integration and continuous deployment (CI/CD) for seamless updates."},
+                    {"S": "Integrated logging and monitoring solutions with AWS CloudWatch, providing real-time insights and troubleshooting capabilities."},
+                    {"S": "Enhanced security by implementing AWS IAM roles and policies, ensuring secure access and compliance with best practices."}
+                ]
+                },
+                "url": {"S": "https://project.com/"}
+                }
+          },
+          {
+            "M": {
+                "name": {"S": "Amazon VPC Deployment"},
+                "startDate": {"S": "2019-01-01"},
+                "endDate": {"S": "2021-01-01"},
+                "description": {"S": "Architected and deployed a secure and scalable Amazon Virtual Private Cloud (VPC) to enhance network isolation and control over cloud resources."},
+                "highlights": {
+                  "L": [
+                    {"S": "Designed a robust VPC architecture featuring both public and private subnets to segregate internet-facing and internal resources."},
+                    {"S": "Configured the public subnet with a custom routing table and an Internet Gateway, facilitating seamless internet access for resources like EC2 instances and Load Balancers."},
+                    {"S": "Established a private subnet with controlled internet access via NAT Gateways, ensuring secure connectivity for backend systems and databases while maintaining high security standards."},
+                    {"S": "Implemented security groups and network ACLs to enforce granular access control and protect against unauthorized access and potential security threats."},
+                    {"S": "Integrated VPC Flow Logs to monitor and analyze network traffic, enabling proactive management and troubleshooting of network-related issues."}
+                  ]
+                },
+                "url": {"S": "https://project.com/"}
+              }
+          }
+      ]
+  }
+}
