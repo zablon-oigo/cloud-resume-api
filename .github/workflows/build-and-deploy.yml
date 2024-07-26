@@ -22,6 +22,9 @@ jobs:
 
     - name: Update DynamoDB Item
       run: |
+          # Install jq if not already installed
+          sudo apt-get update && sudo apt-get install -y jq
+
           # Use environment variables for DynamoDB table details
           TABLE_NAME="${{ env.DYNAMODB_TABLE_NAME }}"
           PRIMARY_KEY="${{ env.DYNAMODB_PRIMARY_KEY }}"
@@ -31,19 +34,22 @@ jobs:
           UPDATE_JSON=$(jq -c . files/resume.json)
 
           # Construct update expression and attribute values
-          UPDATE_EXPRESSION=$(jq -r 'to_entries | map("\(.key) = :\(.key)") | join(", ")' <<< "$UPDATE_JSON")
-          EXPRESSION_ATTRIBUTE_VALUES=$(jq -c 'to_entries | map("\(.key): {\"S\": \(.value.S)}") | add' <<< "$UPDATE_JSON")
+          UPDATE_EXPRESSION=$(jq -r 'to_entries | map("set #\(.key) = :\(.key)") | join(", ")' <<< "$UPDATE_JSON")
+          EXPRESSION_ATTRIBUTE_VALUES=$(jq -c 'to_entries | map(":#\(.key) = {\"S\": \(.value)}") | add' <<< "$UPDATE_JSON")
+          EXPRESSION_ATTRIBUTE_NAMES=$(jq -c 'to_entries | map("#\(.key): \"\(.key)\") | add' <<< "$UPDATE_JSON")
 
           # Debug outputs
           echo "Update Expression: $UPDATE_EXPRESSION"
           echo "Expression Attribute Values: $EXPRESSION_ATTRIBUTE_VALUES"
+          echo "Expression Attribute Names: $EXPRESSION_ATTRIBUTE_NAMES"
 
           # Run the update command
           aws dynamodb update-item \
             --table-name $TABLE_NAME \
             --key "{\"$PRIMARY_KEY\": {\"S\": \"$PRIMARY_KEY_VALUE\"}}" \
-            --update-expression "SET $UPDATE_EXPRESSION" \
+            --update-expression "$UPDATE_EXPRESSION" \
             --expression-attribute-values "$EXPRESSION_ATTRIBUTE_VALUES" \
+            --expression-attribute-names "$EXPRESSION_ATTRIBUTE_NAMES" \
             --region $AWS_REGION
 
     - name: Set up Terraform
