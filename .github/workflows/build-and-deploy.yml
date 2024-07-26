@@ -44,10 +44,9 @@ jobs:
       run: terraform apply -auto-approve 
       working-directory: infra
 
-    - name: Put DynamoDB Item
-      uses: mooyoul/dynamodb-actions@v1.2.1
-      with:
-        operation: batch-put
-        region: ${{ env.AWS_REGION }}
-        table: ${{ env.DYNAMODB_TABLE_NAME }}
-        files: files/resume.json
+    - name: Upload JSON data to DynamoDB
+      run: |
+            aws dynamodb put-item \
+              --table-name ${{ secrets.TABLE_NAME }} \
+              --item file://resume.json \
+              --region ${{ secrets.AWS_REGION }}
