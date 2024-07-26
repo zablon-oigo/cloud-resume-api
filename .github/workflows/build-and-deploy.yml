@@ -27,9 +27,7 @@ jobs:
         echo "access_key = \"${AWS_ACCESS_KEY_ID}\"" >> terraform.tfvars
         echo "secret_key = \"${AWS_SECRET_ACCESS_KEY}\"" >> terraform.tfvars
         echo "region = \"${AWS_REGION}\"" >> terraform.tfvars
-    - name: Destory resource
-      run: terraform destroy -auto-approve
-      working-directory: infra
+
     - name: Initialize Terraform
       run: terraform init
       working-directory: infra
