@@ -4,20 +4,6 @@ provider "aws" {
   access_key = var.access_key    
   secret_key = var.secret_key    
 }
-# Create DynamoDB Table
-resource "aws_dynamodb_table" "resume_table" {
-  name          = "Resumes"
-  billing_mode  = "PROVISIONED"
-  read_capacity = 5
-  write_capacity = 5
-
-  attribute {
-    name = "id"
-    type = "S"
-  }
-
-  hash_key = "id"
-}
 
 # Create an IAM Role for Lambda Execution
 resource "aws_iam_role" "lambda_execution_role" {
