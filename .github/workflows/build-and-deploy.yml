@@ -30,7 +30,7 @@ jobs:
 
     - name: Initialize Terraform
       run: terraform init
-      working-directory: infra/*
+      working-directory: infra
 
     - name: Validate Terraform configuration
       run: terraform validate
