@@ -12,9 +12,9 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: ${{ secrets.AWS_REGION }}
-      DYNAMODB_TABLE_NAME: ${{TABLE_NAME}}
-      DYNAMODB_PRIMARY_KEY: ${{PRIMARY_KEY}}
-      DYNAMODB_PRIMARY_KEY_VALUE: ${{PRIMARY_KEY_VALUE}}
+      DYNAMODB_TABLE_NAME: ${{secrets.TABLE_NAME}}
+      DYNAMODB_PRIMARY_KEY: ${{secrets.PRIMARY_KEY}}
+      DYNAMODB_PRIMARY_KEY_VALUE: ${{secrets.PRIMARY_KEY_VALUE}}
 
     steps:
     - name: Checkout
