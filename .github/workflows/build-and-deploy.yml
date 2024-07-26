@@ -35,10 +35,10 @@ jobs:
       run: terraform validate
 
     - name: Plan Terraform deployment
-      run: terraform plan -out=tfplan -input=false
+      # run: terraform plan -out=tfplan -input=false
       
     - name: Apply Terraform deployment
-      run: terraform apply -auto-approve tfplan -input=false
+      run: terraform apply -auto-approve 
 
     - name: Put DynamoDB Item
       uses: mooyoul/dynamodb-actions@v1.2.1
