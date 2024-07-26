@@ -1,6 +1,5 @@
 {
   "id": {"S": "1"},
-  "viewsCount":{"S":"1"},
   "basics": {
       "M": {
           "name": {"S": "Zablon Oigo"},
