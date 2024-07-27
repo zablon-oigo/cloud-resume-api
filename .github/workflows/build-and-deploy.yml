@@ -24,16 +24,13 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
     
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20.x'
     - name: Install Dependencies
-      run: |
-          npm ci
-    - name: Build Static Resume
-      run: |
-          npm run build
+      run: npm ci
+      working-directory: resume
+
+    - name: Build Static Website
+      run: npm run build
+      working-directory: resume
 
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
