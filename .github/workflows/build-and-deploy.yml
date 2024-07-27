@@ -14,7 +14,7 @@ jobs:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       DYNAMODB_TABLE_NAME: ${{ secrets.TABLE_NAME }}
       BUCKET: ${{ secrets.BUCKET_NAME }}
-      DIST: dist 
+      DIST: dist
       DIST_ID: ${{ secrets.ID }}
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
       TF_WORKSPACE: terraform-github-actions
@@ -23,7 +23,12 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
-    
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20.x'
+
     - name: Install Dependencies
       run: npm ci
       working-directory: resume
@@ -38,25 +43,22 @@ jobs:
         terraform_version: 1.5.0
 
     - name: Terraform Init
-      run: terraform init
+      run: |
+        export TF_API_TOKEN=${{ secrets.TF_API_TOKEN }}
+        terraform init
       working-directory: ${{ env.CONFIG_DIRECTORY }}
-      env:
-        TF_CLOUD_ORGANIZATION: ${{ secrets.ORGANIZATION }}
-        TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
 
     - name: Terraform Plan
-      run: terraform plan -out=tfplan
+      run: |
+        export TF_API_TOKEN=${{ secrets.TF_API_TOKEN }}
+        terraform plan -out=tfplan
       working-directory: ${{ env.CONFIG_DIRECTORY }}
-      env:
-        TF_CLOUD_ORGANIZATION: ${{ secrets.ORGANIZATION }}
-        TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve tfplan
+      run: |
+        export TF_API_TOKEN=${{ secrets.TF_API_TOKEN }}
+        terraform apply -auto-approve tfplan
       working-directory: ${{ env.CONFIG_DIRECTORY }}
-      env:
-        TF_CLOUD_ORGANIZATION: ${{ secrets.ORGANIZATION }}
-        TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
 
     - name: Upload JSON Data to DynamoDB
       run: |
@@ -64,9 +66,8 @@ jobs:
           --table-name ${{ secrets.TABLE_NAME }} \
           --item file://files/resume.json \
           --region ${{ secrets.AWS_REGION }}
-    
+
     - name: Copy files to the production resume website with the AWS CLI
       run: |
         aws s3 sync ${{ env.DIST }} s3://${{ env.BUCKET }} --delete
-        aws cloudfront create-invalidation distribution-id ${{ env.DIST_ID }} --paths "/*"
-
+        aws cloudfront create-invalidation --distribution-id ${{ env.DIST_ID }} --paths "/*"
