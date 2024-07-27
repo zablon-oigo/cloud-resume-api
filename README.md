@@ -7,10 +7,10 @@ This project demonstrates a serverless architecture for a Resume API using AWS L
 
 ### How It Works
 - **API Gateway**: Routes requests to the AWS Lambda function.
-- **AWS Lambda**: Executes the code to fetch resume data from DynamoDB.
-- **DynamoDB**: Stores resume data in a structured format.
-- **S3**: Hosts static assets (e.g., HTML, CSS, JavaScript) for the frontend.
-- **CloudFront**: Caches and serves the frontend assets with low latency.
+- **AWS Lambda**: Executes serverless code to fetch resume data from DynamoDB based on the provided ID, and returns it in JSON format.
+- **DynamoDB**: A NoSQL database that stores and organizes resume data in a structured format for efficient retrieval by the Lambda function.
+- **S3**: Hosts static assets created with React for the frontend. These assets interact with the API Gateway to fetch and display resume data.
+- **CloudFront**: Distributes and caches the static frontend assets from the S3 bucket, providing low-latency access and improving the overall performance of the website.
 
 ### Features
 - **Serverless API**: Utilizes AWS Lambda to handle API requests, eliminating the need for server management and scaling automatically with demand.
