@@ -12,7 +12,7 @@ const Resume = () => {
   const [error, setError] = useState(null);
  
   useEffect(() => {
-    axios.get('https://w72clt3yg5.execute-api.eu-north-1.amazonaws.com/prod/')
+    axios.get('https://8ttdhu3vv7.execute-api.eu-north-1.amazonaws.com/prod/')
       .then(response => {
         setData(response.data);
         setLoading(false);
@@ -24,7 +24,7 @@ const Resume = () => {
   }, []);
 
   if (loading) return <h2 className='text-3xl text-white'>Loading....</h2>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <p className='text-3xl text-white'>Error: {error.message}</p>;
 
   return (
     <div>
