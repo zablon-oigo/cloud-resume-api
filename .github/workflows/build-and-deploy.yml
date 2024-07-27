@@ -13,6 +13,9 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: ${{ secrets.AWS_REGION }}
       DYNAMODB_TABLE_NAME: ${{ secrets.TABLE_NAME }}
+      BUCKET: ${{ secrets.BUCKET_NAME }}
+      DIST: dist 
+      DIST_ID: ${{ secrets.ID }}
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
       TF_WORKSPACE: terraform-github-actions
       CONFIG_DIRECTORY: ./infra
@@ -20,6 +23,15 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20.x'
+    - name: Install Dependencies
+      run: npm ci
+    - name: Build Static Resume
+      run: npm run build
 
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
@@ -53,3 +65,9 @@ jobs:
           --table-name ${{ secrets.TABLE_NAME }} \
           --item file://files/resume.json \
           --region ${{ secrets.AWS_REGION }}
+    
+    - name: Copy files to the production resume website with the AWS CLI
+      run: |
+        aws s3 sync ${{ env.DIST }} s3://${{ env.BUCKET }} --delete
+        aws cloudfront create-invalidation distribution-id ${{ env.DIST_ID }} --paths "/*"
+
