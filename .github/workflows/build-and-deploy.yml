@@ -29,9 +29,11 @@ jobs:
       with:
         node-version: '20.x'
     - name: Install Dependencies
-      run: npm ci
+      run: |
+          npm ci
     - name: Build Static Resume
-      run: npm run build
+      run: |
+          npm run build
 
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
