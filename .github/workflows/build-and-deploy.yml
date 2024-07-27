@@ -13,7 +13,6 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: ${{ secrets.AWS_REGION }}
       DYNAMODB_TABLE_NAME: ${{ secrets.TABLE_NAME }}
-      TF_CLOUD_ORGANIZATION: ${{ secrets.ORGANIZATION }}
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
       TF_WORKSPACE: terraform-github-actions
       CONFIG_DIRECTORY: ./infra
@@ -27,20 +26,26 @@ jobs:
       with:
         terraform_version: 1.5.0
 
-    - name: Upload Configuration to Terraform Cloud
-      uses: hashicorp/terraform-cloud-action@v1
-      with:
-        args: upload --workspace ${{ env.TF_WORKSPACE }} --directory ${{ env.CONFIG_DIRECTORY }} --speculative
+    - name: Terraform Init
+      run: terraform init
+      working-directory: ${{ env.CONFIG_DIRECTORY }}
+      env:
+        TF_CLOUD_ORGANIZATION: ${{ secrets.ORGANIZATION }}
+        TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
 
-    - name: Create Terraform Plan
-      uses: hashicorp/terraform-cloud-action@v1
-      with:
-        args: plan --workspace ${{ env.TF_WORKSPACE }} --speculative
+    - name: Terraform Plan
+      run: terraform plan -out=tfplan
+      working-directory: ${{ env.CONFIG_DIRECTORY }}
+      env:
+        TF_CLOUD_ORGANIZATION: ${{ secrets.ORGANIZATION }}
+        TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
 
-    - name: Apply Terraform Plan
-      uses: hashicorp/terraform-cloud-action@v1
-      with:
-        args: apply --workspace ${{ env.TF_WORKSPACE }} --auto-approve
+    - name: Terraform Apply
+      run: terraform apply -auto-approve tfplan
+      working-directory: ${{ env.CONFIG_DIRECTORY }}
+      env:
+        TF_CLOUD_ORGANIZATION: ${{ secrets.ORGANIZATION }}
+        TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
 
     - name: Upload JSON Data to DynamoDB
       run: |
