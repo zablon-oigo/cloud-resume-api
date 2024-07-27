@@ -23,21 +23,29 @@ jobs:
       with:
         terraform_version: 1.5.0 
 
-    - name: Initialize Terraform
-      run: terraform init
-      working-directory: infra
+    - name: Terraform Destroy
+      id: destroy
+      run: terraform destroy -auto-approve
 
-    - name: Validate Terraform configuration
-      run: terraform validate
-      working-directory: infra
+    # - name: Initialize Terraform
+    #   id: init
+    #   run: terraform init
+    #   working-directory: infra
 
-    - name: Plan Terraform deployment
-      run: terraform plan -out=tfplan -input=false
-      working-directory: infra
+    # - name: Validate Terraform configuration
+    #   run: terraform validate
+    #   id: validate
+    #   working-directory: infra
+
+    # - name: Plan Terraform deployment
+    #   id: plan
+    #   run: terraform plan -out=tfplan -input=false
+    #   working-directory: infra
       
-    - name: Apply Terraform deployment
-      run: terraform apply -auto-approve
-      working-directory: infra
+    # - name: Apply Terraform deployment
+    #   id: apply
+    #   run: terraform apply -auto-approve
+    #   working-directory: infra
 
     - name: Upload JSON data to DynamoDB
       run: |
