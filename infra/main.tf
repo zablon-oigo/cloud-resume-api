@@ -1,3 +1,13 @@
+# Backend configuration for Terraform Cloud 
+terraform {
+  cloud {
+    organization = "resume"
+
+    workspaces {
+      name = "terraform-github-actions"
+    }
+  }
+}
 # Cloud Provider
 provider "aws" {
   region     = var.region        
