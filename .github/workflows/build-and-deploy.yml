@@ -14,22 +14,13 @@ jobs:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       DYNAMODB_TABLE_NAME: ${{ secrets.TABLE_NAME }}
       BUCKET: ${{ secrets.BUCKET_NAME }}
-      DIST: dist
+      DIST: dist 
       DIST_ID: ${{ secrets.ID }}
-      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-      TF_WORKSPACE: terraform-github-actions
-      TF_CLOUD_ORGANIZATION: ${{ secrets.ORGANIZATION }}
-      CONFIG_DIRECTORY: ./infra
 
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20.x'
-
+    
     - name: Install Dependencies
       run: npm ci
       working-directory: resume
@@ -38,48 +29,15 @@ jobs:
       run: npm run build
       working-directory: resume
 
-    - name: Set up Terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        terraform_version: 1.5.0
-
-    - name: Upload Configuration to Terraform Cloud
-      uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
-      id: upload-config
-      with:
-        workspace: ${{ env.TF_WORKSPACE }}
-        directory: ${{ env.CONFIG_DIRECTORY }}
-        speculative: true
-
-    - name: Create Plan in Terraform Cloud
-      uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
-      id: create-plan
-      with:
-        workspace: ${{ env.TF_WORKSPACE }}
-        configuration_version: ${{ steps.upload-config.outputs.configuration_version_id }}
-        plan_only: true
-
-    - name: Get Plan Output
-      uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
-      id: plan-output
-      with:
-        plan: ${{ fromJSON(steps.create-plan.outputs.payload).data.relationships.plan.data.id }}
-
-    - name: Apply Plan in Terraform Cloud
-      uses: hashicorp/tfc-workflows-github/actions/approve-run@v1.0.0
-      id: apply-plan
-      with:
-        workspace: ${{ env.TF_WORKSPACE }}
-        run_id: ${{ fromJSON(steps.create-plan.outputs.payload).data.id }}
-
     - name: Upload JSON Data to DynamoDB
       run: |
         aws dynamodb put-item \
           --table-name ${{ secrets.TABLE_NAME }} \
           --item file://files/resume.json \
           --region ${{ secrets.AWS_REGION }}
-
+    
     - name: Copy files to the production resume website with the AWS CLI
       run: |
         aws s3 sync ${{ env.DIST }} s3://${{ env.BUCKET }} --delete
-        aws cloudfront create-invalidation --distribution-id ${{ env.DIST_ID }} --paths "/*"
+        aws cloudfront create-invalidation distribution-id ${{ env.DIST_ID }} --paths "/*"
+

@@ -1,3 +1,3 @@
 access_key = ""
 secret_key = ""
-region = ""
+region = "eu-north-1"
