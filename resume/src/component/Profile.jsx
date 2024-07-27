@@ -42,12 +42,6 @@ const Profile = ({ profileData, viewsCount }) => {
                 {profileData.phone}
                 </span>
             </span>
-            <span className="flex items-center gap-2 font-light text-md">
-            <FaRegEye className="text-xl text-violet-800"/>
-                 <span className="font-extrabold">
-                 {viewsCount}
-                 </span>
-            </span>
         </div>
         <div className="">
         <h2 className="flex items-center gap-1 font-bold text-gray-700 uppercase text-md md:text-xl">
