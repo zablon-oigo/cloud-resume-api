@@ -24,7 +24,7 @@ const Resume = () => {
   }, []);
 
   if (loading) return <h2 className='text-3xl text-white'>Loading....</h2>;
-  if (error) return <p className='text-3xl text-white'>Error: {error.message}</p>;
+  if (error) return <p className='text-3xl text-center text-white'>Error: {error.message}</p>;
 
   return (
     <div>
