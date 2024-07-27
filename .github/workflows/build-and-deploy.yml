@@ -13,41 +13,50 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: ${{ secrets.AWS_REGION }}
       DYNAMODB_TABLE_NAME: ${{ secrets.TABLE_NAME }}
+      TF_CLOUD_ORGANIZATION: ${{ secrets.ORGANIZATION }}
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      TF_WORKSPACE: terraform-github-actions
+      CONFIG_DIRECTORY: ./infra
 
     steps:
-    - name: Checkout
+    - name: Checkout Code
       uses: actions/checkout@v2
   
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: 1.5.0 
+        terraform_version: 1.5.0
 
-    - name: Terraform Destroy
-      id: destroy
-      run: terraform destroy -auto-approve
+    - name: Upload Configuration to Terraform Cloud
+      uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
+      id: plan-upload
+      with:
+        workspace: ${{ env.TF_WORKSPACE }}
+        directory: ${{ env.CONFIG_DIRECTORY }}
+        speculative: true
 
-    # - name: Initialize Terraform
-    #   id: init
-    #   run: terraform init
-    #   working-directory: infra
+    - name: Create Terraform Plan
+      uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
+      id: plan-run
+      with:
+        workspace: ${{ env.TF_WORKSPACE }}
+        configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
+        plan_only: true
 
-    # - name: Validate Terraform configuration
-    #   run: terraform validate
-    #   id: validate
-    #   working-directory: infra
+    - name: Get Terraform Plan Output
+      uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
+      id: plan-output
+      with:
+        plan: ${{ fromJSON(steps.plan-run.outputs.payload).data.relationships.plan.data.id }}
 
-    # - name: Plan Terraform deployment
-    #   id: plan
-    #   run: terraform plan -out=tfplan -input=false
-    #   working-directory: infra
-      
-    # - name: Apply Terraform deployment
-    #   id: apply
-    #   run: terraform apply -auto-approve
-    #   working-directory: infra
+    - name: Apply Terraform Plan
+      uses: hashicorp/tfc-workflows-github/actions/apply@v1.0.0
+      with:
+        workspace: ${{ env.TF_WORKSPACE }}
+        plan: ${{ fromJSON(steps.plan-output.outputs.payload).data.relationships.plan.data.id }}
+        auto_approve: true
 
-    - name: Upload JSON data to DynamoDB
+    - name: Upload JSON Data to DynamoDB
       run: |
         aws dynamodb put-item \
           --table-name ${{ secrets.TABLE_NAME }} \
