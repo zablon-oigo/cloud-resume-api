@@ -17,6 +17,11 @@ def lambda_handler(event, context):
         
         # Return the items in the response body as a JSON string 
         return {
+            'headers': {
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Origin': 'https://d1mnfk26f2dvgk.cloudfront.net/', # CloudFront DNS
+            'Access-Control-Allow-Methods': 'OPTIONS,GET'
+            },
             'statusCode': 200,
             'body': json.dumps(items)
         }
