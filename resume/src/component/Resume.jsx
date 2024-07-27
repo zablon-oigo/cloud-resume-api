@@ -12,7 +12,7 @@ const Resume = () => {
   const [error, setError] = useState(null);
  
   useEffect(() => {
-    axios.get('https://8ttdhu3vv7.execute-api.eu-north-1.amazonaws.com/prod/')
+    axios.get('https://tuipma3603.execute-api.eu-north-1.amazonaws.com/prod/')
       .then(response => {
         setData(response.data);
         setLoading(false);
