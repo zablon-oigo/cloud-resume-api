@@ -26,22 +26,23 @@ This project demonstrates a serverless architecture for a Resume API using AWS L
 - **CloudFront**: Content Delivery Network (CDN) that caches and delivers the frontend assets globally with low latency.
 
 ### Setup and Deployment
-1. Define Infrastructure Using Terraform:
-    - Begin by configuring your AWS infrastructure with Terraform. Your Terraform configuration files, including main.tf, will define the necessary resources such as Lambda functions, DynamoDB tables, S3 buckets, and API Gateway.
+1. **Define Infrastructure Using Terraform:**
+    - Begin by configuring your AWS infrastructure with Terraform. Your Terraform configuration files, including main.tf, will define the necessary resources such as Lambda functions, DynamoDB 
+      tables, S3 buckets, and API Gateway.
     - Review and edit **main.tf** to fit your infrastructure requirements.
-2. Deploy with Terraform Cloud:
+2. **Deploy with Terraform Cloud:**
    - Use Terraform Cloud for deploying your resources. Terraform Cloud provides a collaborative environment for running and managing your Terraform configurations.
    - Connect your GitHub repository with Terraform Cloud to automatically manage your Terraform state file and trigger deployments.
    - Configure Terraform Cloud to watch for changes in your GitHub repository. Terraform Cloud will automatically trigger runs and apply updates whenever there are changes to your Terraform configurations.
    - Ensure your Terraform Cloud workspace is configured with the necessary AWS credentials and variables.
-3. Sync Frontend Assets to S3:
+3. **Sync Frontend Assets to S3:**
    - Configure your GitHub Actions workflow to automate the deployment of your static assets to an S3 bucket. This can be achieved by creating a GitHub Actions workflow that uses the AWS CLI to sync the contents of your React dist folder with your S3 bucket.
 
-4. Upload DynamoDB Items:
+4. **Upload DynamoDB Items:**
    - Add another step in your GitHub Actions workflow to upload JSON data to DynamoDB. This ensures that the database is updated with the latest resume information as part of the continuous deployment process.
-5. Deploy API:
+5. **Deploy API:**
    - Make sure your API Gateway and Lambda function are correctly deployed and linked. This should be managed within your Terraform configuration, and any updates should be applied via Terraform Cloud.
-6. Deploy React Application on S3 and Create CloudFront Distribution:
+6. **Deploy React Application on S3 and Create CloudFront Distribution:**
    - Upload your React application's dist directory files to the S3 bucket.
    - Create a CloudFront distribution to serve your static assets from the S3 bucket. Configure CloudFront to use the S3 bucket as the origin and set up the distribution settings according to your needs
 ### API Endpoints
