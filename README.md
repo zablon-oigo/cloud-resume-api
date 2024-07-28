@@ -63,4 +63,4 @@ If you have any feedback, please [DM](https://www.linkedin.com/in/zablon-oigo-ba
 ### Blog Post
 read more here : [Blog](https://dev.to/zablonoigo/transform-your-cloud-skills-a-hands-on-guide-to-building-a-serverless-resume-application-4i7d)
 ### Cloud Resume API Challenge
-This repository contains a complete solution for the [AWS Resume API Challenge](https://cloudresumeapi.dev/aws/), created by [Rishab Kumar](https://github.com/rishabkumar7). It features an API hosted on AWS that serves resume data in JSON format.
+This repository contains a complete solution for the [AWS Resume API Challenge](https://cloudresumeapi.dev/aws/), created by [Rishab Kumar](https://github.com/rishabkumar7) and [Ifeanyi Otuonye](https://medium.com/@ifeanyiro). It features an API hosted on AWS that serves resume data in JSON format.
