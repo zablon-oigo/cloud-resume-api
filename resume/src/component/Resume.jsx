@@ -28,13 +28,13 @@ const Resume = () => {
   }, []);
 
   if (loading) return <h2 className='text-3xl text-white'>Loading....</h2>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <p className='my-40 text-3xl text-center text-white'>Error: {error.message}</p>;
 
   return (
     <div>
       {data && (
         <>
-          <Profile profileData={data.basics} />
+          <Profile profileData={data.basics} viewsCount={data.viewsCount} />
           <Work workData={data.work} />
           <Education educationData={data.education} />
           <Certificates certificatesData={data.certificates} />
