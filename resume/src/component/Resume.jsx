@@ -16,7 +16,7 @@ const Resume = () => {
     axios.get('https://tuipma3603.execute-api.eu-north-1.amazonaws.com/prod/')
       .then(response => {
         console.log('API Response:', response.data);
-        const resumeData = response.data[0];
+        const resumeData = response.data;
         setData(resumeData);
         setLoading(false);
       })
