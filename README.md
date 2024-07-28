@@ -1,5 +1,5 @@
 # Cloud Resume API with AWS
-This project demonstrates a serverless architecture for a Resume API using AWS Lambda and DynamoDB. The Lambda function retrieves resume data from DynamoDB and returns it in JSON format. The setup incorporates GitHub Actions for automated deployment and Terraform Cloud for infrastructure management and resource provisioning. Additionally, a React frontend has been added to provide appealing visuals and an interactive user interface for displaying the resume data.
+This project demonstrates a serverless architecture for a Resume API using AWS Lambda and DynamoDB. The Lambda function retrieves resume data from DynamoDB and returns it in JSON format. The setup incorporates GitHub Actions for automated deployment and Terraform Cloud for infrastructure management and resource provisioning. Additionally, I have added a React frontend  to provide appealing visuals and an interactive user interface for displaying the resume data.
 
 ### Architecture Diagram
 ![resume](https://github.com/user-attachments/assets/cb8f162f-7af3-49fa-bf17-9be054d50e3c)
@@ -59,4 +59,8 @@ The frontend is served from S3 and cached by CloudFront, ensuring global availab
 #### Demo
 [ResumeTemplate](https://d1mnfk26f2dvgk.cloudfront.net/)
 ### Feedback
-If you have any feedback, please [DM](https://www.linkedin.com/in/zablon-oigo-ba4268234/) me directly via **Linkedin**
+If you have any feedback, please [DM](https://www.linkedin.com/in/zablon-oigo-ba4268234/) me directly on **Linkedin**
+### Blog Post
+read more here : [Blog](https://dev.to/zablonoigo/transform-your-cloud-skills-a-hands-on-guide-to-building-a-serverless-resume-application-4i7d)
+### Cloud Resume API Challenge
+This repository contains a complete solution for the [AWS Resume API Challenge](https://cloudresumeapi.dev/aws/), created by [Rishab Kumar](https://github.com/rishabkumar7). It features an API hosted on AWS that serves resume data in JSON format.
